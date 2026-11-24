@@ -15,6 +15,7 @@ The project uses PostgreSQL **17** in Docker. Every developer runs this stack on
 | `DB_PASSWORD` | Database password | a local secret |
 | `DB_HOST` | Host used by Spring Boot | `localhost` |
 | `DB_PORT` | Host port used by Spring Boot | `5433` |
+| `DDL_AUTO` | Hibernate schema mode | `update` locally; `validate` for deployments |
 
 `DB_NAME`, `DB_USERNAME`, and `DB_PASSWORD` create and configure the local database container. `DB_HOST` and `DB_PORT` define where Spring Boot connects; use production host and port values when deploying. The database name and credentials remain environment-driven in every environment.
 
@@ -40,7 +41,7 @@ The project uses PostgreSQL **17** in Docker. Every developer runs this stack on
    .\mvnw.cmd spring-boot:run
    ```
 
-Spring Boot loads `.env` when it is present and connects to `jdbc:postgresql://localhost:5433/<DB_NAME>`. Hibernate uses `ddl-auto=validate`, so it validates mapped schema rather than creating or changing it. Apply the project's database migrations before starting the application once migrations are introduced.
+Spring Boot loads `.env` when it is present and connects to `jdbc:postgresql://localhost:5433/<DB_NAME>`. By default Hibernate uses `ddl-auto=update` to bootstrap the local development schema. Set `DDL_AUTO=validate` in deployments once the schema is managed by migrations.
 
 ### Daily commands
 

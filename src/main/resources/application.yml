@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    active: dev
   application:
     name: crm
   # Allows the same local .env file to be used by Docker Compose and Spring Boot.
@@ -18,6 +20,17 @@ spring:
 # Comma-separated origins; '*' is not permitted. Defaults to the React/Vite dev server.
 crm:
   security:
+    jwt:
+      issuer: crm-auth
+      audience: crm-api
+
+      public-keys:
+        local-dev: file:./secrets/jwt-public.pem
+
+      signing:
+        private-key: file:./secrets/jwt-private.pem
+        public-key: file:./secrets/jwt-public.pem
+        key-id: local-dev
     cors:
       allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:5173}
 
