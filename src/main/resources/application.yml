@@ -14,9 +14,7 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      # `update` bootstraps a developer database until versioned migrations are added.
-      # Deployments should set DDL_AUTO=validate (or a stricter production value).
-      ddl-auto: ${DDL_AUTO:update}
+      ddl-auto: update
 
 # --- CORS (pl.gg.crm.config.CorsProperties) ---
 # Comma-separated origins; '*' is not permitted. Defaults to the React/Vite dev server.
