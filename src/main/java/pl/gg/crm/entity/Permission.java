@@ -6,6 +6,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -23,5 +26,8 @@ public class Permission {
     @NotNull
     @Column(name = "permission_name", nullable = false, length = 100)
     private String permissionName;
+
+    @OneToMany(mappedBy = "permission")
+    private Set<RolePermission> rolePermissions = new HashSet<>();
 
 }

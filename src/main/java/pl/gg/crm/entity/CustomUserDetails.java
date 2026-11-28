@@ -1,3 +1,4 @@
+
 package pl.gg.crm.entity;
 
 import lombok.Getter;
@@ -7,7 +8,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @RequiredArgsConstructor
@@ -17,7 +19,30 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+
+        Set<GrantedAuthority> authorities = new HashSet<>();
+
+        for (UserRole userRole : user.getUserRoles()) {
+
+            Role role = userRole.getRole();
+
+            // Add role
+            authorities.add(
+                    new SimpleGrantedAuthority("ROLE_" + role.getRoleName())
+            );
+
+            // Add permissions assigned to this role
+            for (RolePermission rolePermission : role.getRolePermissions()) {
+
+                authorities.add(
+                        new SimpleGrantedAuthority(
+                                rolePermission.getPermission().getPermissionName()
+                        )
+                );
+            }
+        }
+
+        return authorities;
     }
 
     @Override
