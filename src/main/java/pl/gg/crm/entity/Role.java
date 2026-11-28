@@ -17,6 +17,12 @@ import java.util.Set;
 })
 public class Role {
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "roles_id_gen")
+    @SequenceGenerator(
+            name = "roles_id_gen",
+            sequenceName = "roles_role_id_seq",
+            allocationSize = 1
+    )
     @Column(name = "role_id", nullable = false)
     private Integer id;
 
@@ -25,13 +31,7 @@ public class Role {
     @Column(name = "role_name", nullable = false, length = 50)
     private String roleName;
 
-    @OneToMany(mappedBy = "role")
-    @JoinTable(
-            name = "role_permissions",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "permission_id")
-    )
-    private Set<Permission> permissions = new HashSet<>();
+
 
     @OneToMany(mappedBy = "role")
     private Set<RolePermission> rolePermissions = new HashSet<>();
