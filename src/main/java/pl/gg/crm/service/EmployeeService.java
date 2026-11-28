@@ -1,6 +1,7 @@
 
 package pl.gg.crm.service;
 
+import org.springframework.data.jpa.domain.Specification;
 import pl.gg.crm.dto.EmployeeRequestDTO;
 import pl.gg.crm.dto.EmployeeResponseDTO;
 import pl.gg.crm.entity.Employee;
@@ -108,6 +109,10 @@ public class EmployeeService {
         User user = userRepository.findById(dto.userId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        if (employeeRepository.existsByUser_Id(user.getId())) {
+            throw new IllegalStateException("Employee already exists for this user");
+        }
+
         Employee employee = new Employee();
 
         employee.setUser(user);
@@ -146,5 +151,42 @@ public class EmployeeService {
         }
 
         employeeRepository.deleteById(id);
+    }
+
+    public List<EmployeeResponseDTO> filterEmployees(
+            String firstName,
+            String lastName,
+            EmployeeRole position
+    ) {
+        Specification<Employee> spec = Specification.where((Specification<Employee>) null);
+
+        if (firstName != null && !firstName.isBlank()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(
+                            cb.lower(root.get("firstName")),
+                            "%" + firstName.toLowerCase() + "%"
+                    )
+            );
+        }
+
+        if (lastName != null && !lastName.isBlank()) {
+            spec = spec.and((root, query, cb) ->
+                    cb.like(
+                            cb.lower(root.get("lastName")),
+                            "%" + lastName.toLowerCase() + "%"
+                    )
+            );
+        }
+
+        if (position != null) {
+            spec = spec.and((root, query, cb) ->
+                    cb.equal(root.get("position"), position)
+            );
+        }
+
+        return employeeRepository.findAll(spec)
+                .stream()
+                .map(this::toDTO)
+                .toList();
     }
 }

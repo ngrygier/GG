@@ -31,4 +31,6 @@ public interface EmployeeRepository
 
     // Check if employees with a given role exist
     boolean existsByPosition(EmployeeRole position);
+
+    boolean existsByUser_Id(Integer userId);
 }
