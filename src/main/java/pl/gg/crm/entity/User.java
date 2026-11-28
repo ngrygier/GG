@@ -48,4 +48,7 @@ public class User {
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
 
+    @OneToOne(mappedBy = "user")
+    private Employee employee;
+
 }

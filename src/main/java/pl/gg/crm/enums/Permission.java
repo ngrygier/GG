@@ -1,0 +1,28 @@
+
+package pl.gg.crm.enums;
+
+public enum Permission {
+
+    EMPLOYEE_READ,
+    EMPLOYEE_CREATE,
+    EMPLOYEE_UPDATE,
+    EMPLOYEE_DELETE,
+
+    CLIENT_READ,
+    CLIENT_CREATE,
+    CLIENT_UPDATE,
+    CLIENT_DELETE,
+
+    PROJECT_READ,
+    PROJECT_CREATE,
+    PROJECT_UPDATE,
+
+    TASK_READ,
+    TASK_UPDATE,
+
+    OFFER_READ,
+    OFFER_CREATE,
+    OFFER_UPDATE,
+
+    CONTRACT_READ
+}
