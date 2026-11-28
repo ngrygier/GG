@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import pl.gg.crm.enums.EmployeeRole;
 
 import java.time.LocalDate;
 
@@ -47,5 +48,11 @@ public class Employee {
     @NotNull
     @Column(name = "hire_date", nullable = false)
     private LocalDate hireDate;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "position", nullable = false)
+    private EmployeeRole position;
+
 
 }
