@@ -23,6 +23,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                         new UsernameNotFoundException("User not found")
                 );
 
+        if (user.getEmployee() == null) {
+            throw new UsernameNotFoundException("User is missing an employee profile");
+        }
+
         return new CustomUserDetails(user);
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import pl.gg.crm.security.support.SecurityTestConfig;
-import pl.gg.crm.security.support.SecurityTestController;
+import pl.gg.testsupport.SecurityTestController;
 import pl.gg.crm.security.support.TestJwts;
 
 import java.io.IOException;
@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * mapowanie claims na authorities -> {@code @PreAuthorize}. Tokeny są podpisywane efemerycznym kluczem RSA.
  */
 @WebMvcTest(controllers = SecurityTestController.class)
-@Import(SecurityTestConfig.class)
+@Import({SecurityTestConfig.class, SecurityTestController.class})
 class JwtResourceServerTest {
 
     private static final String KID = "test-key";

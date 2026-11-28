@@ -4,6 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
+import pl.gg.crm.repository.EmployeeRepository;
+import pl.gg.crm.repository.UserRepository;
 import pl.gg.crm.security.access.ResourceAccessService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,6 +24,15 @@ class CrmApplicationTests {
 
 	@Autowired
 	private ResourceAccessService resourceAccessService;
+
+	@MockitoBean
+	private UserRepository userRepository;
+
+	@MockitoBean
+	private EmployeeRepository employeeRepository;
+
+	@MockitoBean
+	private JwtEncoder jwtEncoder;
 
 	@Test
 	void contextLoads() {

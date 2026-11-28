@@ -1,7 +1,10 @@
 package pl.gg.crm.security.support;
 
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import pl.gg.crm.config.CorsConfig;
 import pl.gg.crm.config.SecurityConfig;
 import pl.gg.crm.security.access.NotImplementedResourceAssignmentLookup;
@@ -22,4 +25,11 @@ import pl.gg.crm.security.user.CurrentUserIdResolver;
         NotImplementedResourceAssignmentLookup.class
 })
 public class SecurityTestConfig {
+
+    @Bean
+    UserDetailsService userDetailsService() {
+        return username -> {
+            throw new UsernameNotFoundException("No users are configured for MVC security tests");
+        };
+    }
 }

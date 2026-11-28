@@ -16,7 +16,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import pl.gg.crm.security.jwt.JwtAuthoritiesConverter;
 import pl.gg.crm.security.support.TestJwts;
 import pl.gg.crm.security.support.SecurityTestConfig;
-import pl.gg.crm.security.support.SecurityTestController;
+import pl.gg.testsupport.SecurityTestController;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Testy produkcyjnego łańcucha filtrów bez skonfigurowanego klucza RSA (stan obecny).
  */
 @WebMvcTest(controllers = SecurityTestController.class)
-@Import(SecurityTestConfig.class)
+@Import({SecurityTestConfig.class, SecurityTestController.class})
 class SecurityConfigTest {
 
     private static final JwtAuthoritiesConverter AUTHORITIES =
@@ -61,9 +61,9 @@ class SecurityConfigTest {
     }
 
     @Test
-    void exactlyOneFilterChainAndNoJwtDecoderWithoutRsaKey() {
+    void exactlyOneFilterChainAndJwtDecoderFromConfiguredLocalKey() {
         assertThat(filterChains).hasSize(1);
-        assertThat(jwtDecoder.getIfAvailable()).isNull();
+        assertThat(jwtDecoder.getIfAvailable()).isNotNull();
     }
 
     @Test

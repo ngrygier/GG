@@ -1,4 +1,4 @@
-package pl.gg.crm.security.support;
+package pl.gg.testsupport;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
